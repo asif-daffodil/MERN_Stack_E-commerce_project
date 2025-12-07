@@ -1,5 +1,6 @@
 
-const Footer = () => {
+const Footer = ({data}) => {
+    const {name, address, email, phone} = data ?? {};
     return (
         <footer className="bg-gray-800 py-6  px-8 tracking-wide mt-16">
             <div className="relative max-w-screen-xl mx-auto">
@@ -11,7 +12,7 @@ const Footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 pt-20">
                     <div className="lg:col-span-2 max-w-sm">
                         <h4 className="text-base font-medium mb-6 text-slate-100">About Us</h4>
-                        <p className="text-slate-400 text-base leading-relaxed">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida,
+                        <p className="text-slate-400 text-base leading-relaxed">{name} Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida,
                             mi eu pulvinar cursus, sem elit interdum mauris.</p>
                     </div>
                     <div>
@@ -32,10 +33,9 @@ const Footer = () => {
                     <div>
                         <h4 className="text-base font-medium mb-6 text-slate-100">Contact Us</h4>
                         <ul className="space-y-4">
-                            <li className="text-slate-400 text-base">123 Main Street</li>
-                            <li className="text-slate-400 text-base">City, State, Country</li>
-                            <li className="text-slate-400 text-base">contact@example.com</li>
-                            <li className="text-slate-400 text-base">+1 234 567 890</li>
+                            <li className="text-slate-400 text-base">{address}</li>
+                            <li className="text-slate-400 text-base">{email}</li>
+                            <li className="text-slate-400 text-base">{phone}</li>
                         </ul>
                     </div>
                     <div>

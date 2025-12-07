@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded());
 app.use(express.static('public'));
 
 const mongoose = require('mongoose');
-const Company = require('./model/company');
+const Company = require('./models/company');
 
 const mongoConnect = async () => {
     try {
@@ -35,6 +35,9 @@ const baseApiUrl = `/api/v${apiVersion}`;
 
 const companyDetailsRoute = require('./routes/frontend/companyDetails');
 app.use(baseApiUrl, companyDetailsRoute);
+
+const authRouter = require('./routes/frontend/authRouter');
+app.use(baseApiUrl, authRouter);
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on: http://localhost:${process.env.PORT}`);
