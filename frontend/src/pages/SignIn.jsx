@@ -1,13 +1,15 @@
 import { Link } from "react-router";
+import useAuthRedirect from "../hooks/useAuthRedirect";
 
 const SignIn = () => {
+    useAuthRedirect();
     return (
         <div className="bg-white md:min-h-screen flex items-center justify-center p-4">
             <div className="w-full max-w-[950px] bg-white [box-shadow:0_2px_10px_-3px_rgba(14,14,14,0.3)] rounded-2xl overflow-hidden">
                 <div className="flex items-center max-md:flex-col w-full gap-y-4">
                     <div className="md:max-w-[570px] w-full h-full">
                         <div className="md:aspect-[7/10] bg-gray-50 relative before:absolute before:inset-0 before:bg-black/40 overflow-hidden w-full h-full">
-                            <img src="https://readymadeui.com/team-image.webp" className="w-full h-full object-cover" alt="login img" />
+                            <img src="http://localhost:4000/images/team-image.webp" className="w-full h-full object-cover" alt="login img" />
                             <div className="absolute inset-0 flex items-end justify-center">
                                 <div className="w-full bg-gradient-to-t from-black/50 via-black/50 to-transparent absolute bottom-0 p-6 max-md:hidden">
                                     <h1 className="text-white text-2xl font-semibold">Welcome Back</h1>

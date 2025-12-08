@@ -1,14 +1,42 @@
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router";
+import { toast } from "react-toastify";
+import { setCredentials } from "../features/auth/authSlice";
+import useAuthRedirect from "../hooks/useAuthRedirect";
 
 const SignUp = () => {
-    const {register, handleSubmit, formState: { errors }, reset} = useForm();
-
-    
+    useAuthRedirect();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const dispatch = useDispatch();
+    const mutation = useMutation({
+        mutationFn: async (formData) => {
+            return await axios.post('http://localhost:4000/api/v1.0.0/sign-up', formData)
+        },
+        onSuccess: (data) => {
+            dispatch(setCredentials(data.data));
+            toast.success(data.data.message);
+        },
+        onError: (error) => {
+            console.error("Error registering user:", error);
+        }
+    });
 
     const onSubmit = (data) => {
-        console.log(data);
+        mutation.mutate(data);
         reset();
+    }
+
+    const handleShowPassword = () => {
+        const passwordInput = document.getElementById('password');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+        }
     }
 
     return (
@@ -71,8 +99,8 @@ const SignUp = () => {
                                 <input {...register("password", {
                                     required: "Password is required",
                                     pattern: { value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, message: "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character" }
-                                })} type="password" className="text-slate-900 bg-white border border-slate-300 w-full text-sm pl-4 pr-8 py-2.5 rounded-md outline-blue-500" placeholder="Enter password" />
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb" className="w-4 h-4 absolute right-4 cursor-pointer" viewBox="0 0 128 128">
+                                })} type="password" className="text-slate-900 bg-white border border-slate-300 w-full text-sm pl-4 pr-8 py-2.5 rounded-md outline-blue-500" placeholder="Enter password" id="password" />
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb" className="w-4 h-4 absolute right-4 cursor-pointer" viewBox="0 0 128 128" onClick={handleShowPassword}>
                                     <path d="M64 104C22.127 104 1.367 67.496.504 65.943a4 4 0 0 1 0-3.887C1.367 60.504 22.127 24 64 24s62.633 36.504 63.496 38.057a4 4 0 0 1 0 3.887C126.633 67.496 105.873 104 64 104zM8.707 63.994C13.465 71.205 32.146 96 64 96c31.955 0 50.553-24.775 55.293-31.994C114.535 56.795 95.854 32 64 32 32.045 32 13.447 56.775 8.707 63.994zM64 88c-13.234 0-24-10.766-24-24s10.766-24 24-24 24 10.766 24 24-10.766 24-24 24zm0-40c-8.822 0-16 7.178-16 16s7.178 16 16 16 16-7.178 16-16-7.178-16-16-16z" data-original="#000000" />
                                 </svg>
                             </div>
