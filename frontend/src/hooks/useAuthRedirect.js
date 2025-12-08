@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
-const useAuthRedirect = () => {
+const useAuthRedirect = (path = "/") => {
     const token = useSelector((state) => state.auth.token);
     const navigate = useNavigate();
 
@@ -15,11 +15,13 @@ const useAuthRedirect = () => {
                         headers: { Authorization: `Bearer ${token}` },
                     });
                     if (response.data.message === "Authorized") {
-                        navigate('/');
+                        navigate(path);
                     }
                 } catch (error) {
                     console.error('Error during authorization check:', error);
                 }
+            }else{
+                navigate('/sign-in');
             }
         };
 

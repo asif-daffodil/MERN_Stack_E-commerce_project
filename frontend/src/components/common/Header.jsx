@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router";
 
 const Header = ({ data }) => {
@@ -10,6 +11,7 @@ const Header = ({ data }) => {
             collapseMenu.style.display = 'block';
         }
     }
+    const user = useSelector((state) => state.auth.user);
 
 
     return (
@@ -28,11 +30,17 @@ const Header = ({ data }) => {
                     </svg>
                     {email}
                 </button>
+                {!user ? (
                 <div className="sm:ml-auto text-white">
                     <Link to="/sign-in" className="text-white text-sm mr-1">Sign In</Link>
                     /
                     <Link to="/sign-up" className="text-white text-sm ml-1">Sign Up</Link>
                 </div>
+                ) : (
+                <div className="sm:ml-auto text-white">
+                    Welcome {user?.name?.split(" ")[0]}     
+                </div>
+                )}
             </section>
             <div className="flex flex-wrap items-center justify-between py-3 px-4 sm:px-10 bg-[#151d20] lg:gap-y-4 gap-y-6 gap-x-4">
                 <a href="javascript:void(0)" className="text-white text-2xl font-bold">{name}</a>
@@ -61,9 +69,11 @@ const Header = ({ data }) => {
                 <div className="flex items-center max-sm:ml-auto">
                     <ul className="flex space-x-4">
                         <li className="relative px-1 lg:hover:after:absolute lg:after:bg-white lg:after:w-0 lg:hover:after:w-full lg:hover:after:h-[2px] lg:after:block lg:after:-bottom-4 lg:after:transition-all lg:after:duration-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" className="cursor-pointer fill-white" viewBox="0 0 512 512">
-                                <path d="M437.02 74.981C388.667 26.629 324.38 0 256 0S123.333 26.629 74.98 74.981C26.629 123.333 0 187.62 0 256s26.629 132.667 74.98 181.019C123.333 485.371 187.62 512 256 512s132.667-26.629 181.02-74.981C485.371 388.667 512 324.38 512 256s-26.629-132.667-74.98-181.019zM256 482c-66.869 0-127.037-29.202-168.452-75.511C113.223 338.422 178.948 290 256 290c-49.706 0-90-40.294-90-90s40.294-90 90-90 90 40.294 90 90-40.294 90-90 90c77.052 0 142.777 48.422 168.452 116.489C383.037 452.798 322.869 482 256 482z" data-original="#000000" />
-                            </svg>
+                            <Link to="/profile">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" className="cursor-pointer fill-white" viewBox="0 0 512 512">
+                                    <path d="M437.02 74.981C388.667 26.629 324.38 0 256 0S123.333 26.629 74.98 74.981C26.629 123.333 0 187.62 0 256s26.629 132.667 74.98 181.019C123.333 485.371 187.62 512 256 512s132.667-26.629 181.02-74.981C485.371 388.667 512 324.38 512 256s-26.629-132.667-74.98-181.019zM256 482c-66.869 0-127.037-29.202-168.452-75.511C113.223 338.422 178.948 290 256 290c-49.706 0-90-40.294-90-90s40.294-90 90-90 90 40.294 90 90-40.294 90-90 90c77.052 0 142.777 48.422 168.452 116.489C383.037 452.798 322.869 482 256 482z" data-original="#000000" />
+                                </svg>
+                            </Link>
                         </li>
                         <li className="relative px-1 lg:hover:after:absolute lg:after:bg-white lg:after:w-0 lg:hover:after:w-full lg:hover:after:h-[2px] lg:after:block lg:after:-bottom-4 lg:after:transition-all lg:after:duration-300">
                             <span className="relative">

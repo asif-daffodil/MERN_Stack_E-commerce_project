@@ -40,4 +40,25 @@ const checkAuth = (req, res) => {
     });
 }
 
-module.exports = { register, checkAuth };
+const signIn = async (req, res) => {
+    const { email = '', password = '' } = req.body || {};
+    if(!email || !password) {
+        res.status(400).json({ error: 'Email and password are required' });
+    }
+    try {
+        const user = await User.findOne({ email });
+        if(!user) {
+            throw new Error('User not found');
+        }
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if(!isPasswordValid) {
+            throw new Error('Invalid password');
+        }
+        const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '30d' });
+        res.status(200).json({ message: 'Sign-in successful', newUser: user, token });
+    } catch (error) {
+        res.status(401).json({ error: 'Error signing in', details: error.message });
+    }
+}
+
+module.exports = { register, checkAuth, signIn };

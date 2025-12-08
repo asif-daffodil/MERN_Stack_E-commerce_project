@@ -39,6 +39,9 @@ app.use(baseApiUrl, companyDetailsRoute);
 const authRouter = require('./routes/frontend/authRouter');
 app.use(baseApiUrl, authRouter);
 
+const userRouter = require('./routes/frontend/userRouter');
+app.use(baseApiUrl, userRouter);
+
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on: http://localhost:${process.env.PORT}`);
 });

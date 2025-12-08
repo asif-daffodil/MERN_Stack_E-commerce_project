@@ -5,6 +5,7 @@ import Contact from "./pages/Contact";
 import MainLayout from "./Layouts/MainLayout";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import Profile from "./pages/Profile";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,9 @@ const router = createBrowserRouter([
       {
         path: "/sign-up",
         element: <SignUp />,
+      },{
+        path: "/profile",
+        element: <Profile />,
       }
     ],
   },
